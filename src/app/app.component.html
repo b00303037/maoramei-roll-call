@@ -92,12 +92,18 @@
                   <button
                     mat-icon-button
                     color="primary"
+                    matTooltip="編輯"
                     (click)="onAddOrEdit(record, i)"
                   >
                     <mat-icon>edit</mat-icon>
                   </button>
 
-                  <button mat-icon-button color="warn" (click)="onDelete(i)">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    matTooltip="刪除"
+                    (click)="onDelete(i)"
+                  >
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
@@ -107,7 +113,7 @@
         </div>
 
         <div
-          class="w-full h-12 flex justify-center items-center bg-accent text-white cursor-pointer"
+          class="w-full h-12 flex justify-center items-center rounded-full bg-accent text-white cursor-pointer"
           matTooltip="新增紀錄"
           (click)="onAddOrEdit()"
         >

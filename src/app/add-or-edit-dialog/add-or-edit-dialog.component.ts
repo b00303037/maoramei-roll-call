@@ -70,7 +70,7 @@ export class AddOrEditDialogComponent implements OnInit, OnDestroy {
       }),
       nameSet: new FormControl(new Set<string>(), {
         nonNullable: true,
-        validators: [ValidatorsExtra.minSize(1)],
+        validators: [ValidatorsExtra.minSize(10)],
       }),
     },
     {
