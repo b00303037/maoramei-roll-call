@@ -56,6 +56,8 @@ export class AppComponent implements OnDestroy {
   };
   yAxisTickFormatting = this._formatYAxisTick.bind(this);
 
+  selected: string | undefined;
+
   constructor(
     private matDialog: MatDialog,
     private media: MediaMatcher,
@@ -112,6 +114,12 @@ export class AppComponent implements OnDestroy {
       .subscribe();
   }
 
+  onSelect(name: string): void {
+    this.selected = this.selected === name ? undefined : name;
+
+    console.log(this.selected);
+  }
+
   onDelete(index: number): void {
     this.dataSource = this.dataSource.filter((record, i) => i !== index);
     this.count();
@@ -123,6 +131,13 @@ export class AppComponent implements OnDestroy {
     this.dataSource.sort(
       (a, b) => new Date(a.datetime).valueOf() - new Date(b.datetime).valueOf()
     );
+  }
+
+  ngOnDestroy(): void {
+    this.MDQuery.removeEventListener('change', this._MDQueryListener);
+
+    this.destroy$.next(null);
+    this.destroy$.complete();
   }
 
   private count(): void {
@@ -153,13 +168,6 @@ export class AppComponent implements OnDestroy {
     }
 
     this.results = allResults.slice(0, end + 1);
-  }
-
-  ngOnDestroy(): void {
-    this.MDQuery.removeEventListener('change', this._MDQueryListener);
-
-    this.destroy$.next(null);
-    this.destroy$.complete();
   }
 
   private _formatYAxisTick(value: number): string | null {

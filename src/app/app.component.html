@@ -16,7 +16,7 @@
       class="flex items-center"
     >
       <mat-icon>chevron_left</mat-icon>
-      <span>點名紀錄</span>
+      <span class="text-xs">點名紀錄</span>
     </button>
 
     <div [ngSwitch]="selectedIndex" class="text-3xl">
@@ -30,7 +30,7 @@
       (click)="selectedIndex = 1"
       class="flex items-center"
     >
-      <span>統計圖表</span>
+      <span class="text-xs">統計圖表</span>
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
@@ -78,7 +78,11 @@
                   <mat-chip-list [selectable]="false">
                     <mat-chip
                       *ngFor="let name of record.names"
-                      color="primary"
+                      (click)="onSelect(name)"
+                      class="cursor-pointer"
+                      [ngClass]="{
+                        'bg-primary text-white': name === selected
+                      }"
                       >{{ name }}</mat-chip
                     >
                   </mat-chip-list>
