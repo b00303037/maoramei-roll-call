@@ -1,1 +1,178 @@
+@use "@angular/material" as mat;
+
+@use "./styles/themes/default";
+
+@include mat.core();
+@include mat.all-component-themes(default.$theme);
+
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  // page
+  .w-page {
+    @apply box-border w-full max-w-7xl m-auto;
+  }
+
+  // form
+  .form-box {
+    @apply grid gap-x-4;
+  }
+  .form-field-header {
+    @apply block text-xl mb-4;
+  }
+
+  // table
+  .table-box {
+    @apply max-w-full overflow-auto;
+
+    table {
+      @apply w-full;
+    }
+  }
+
+  // actions-box
+  .actions-box {
+    @apply flex items-center;
+
+    button {
+      @apply ml-2 first-of-type:ml-0;
+    }
+  }
+}
+
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Noto Sans TC", sans-serif;
+}
+
+$warn: #f44336;
+
+/* adjustments for @angular/material */
+// button
+.mat-icon-button {
+  line-height: 1 !important;
+}
+a.mat-icon-button {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+// form-field
+mat-form-field {
+  margin-bottom: 1em !important; // appearance: fill
+}
+.form-field-label {
+  color: rgba(0, 0, 0, 0.6);
+
+  white-space: nowrap;
+}
+.form-field {
+  position: relative;
+  margin-bottom: calc(1.34375em + 1em); // appearance: fill
+  padding: 0 0.75em 0 0.75em;
+  border-radius: 4px 4px 0 0;
+
+  background-color: rgba(0, 0, 0, 0.04);
+
+  .form-field-error {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    margin-top: 0.6666666667em;
+    padding: 0 1em;
+
+    overflow: hidden !important;
+  }
+}
+.form-field::after {
+  content: "";
+  height: 1px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: rgba(0, 0, 0, 0.42);
+}
+.form-field.form-field-invalid {
+  border-bottom-color: $warn;
+
+  .form-field-label {
+    color: $warn;
+  }
+  .form-field-error {
+    height: auto;
+
+    color: $warn;
+  }
+}
+.form-field:hover::after,
+.form-field.form-field-invalid::after {
+  height: 2px;
+}
+.form-field:hover::after {
+  background-color: rgba(0, 0, 0, 0.87);
+}
+.form-field.form-field-invalid::after {
+  background-color: $warn;
+}
+.mat-form-field-subscript-wrapper {
+  overflow: visible !important;
+}
+.mat-error,
+.form-field-error {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  white-space: nowrap !important;
+}
+
+// table
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  padding: 8px !important;
+}
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 24px !important;
+}
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 24px !important;
+}
+th.mat-header-cell {
+  white-space: nowrap;
+}
+
+// tabs
+mat-tab-group.hidden-tabs > mat-tab-header {
+  display: none !important;
+}
+mat-tab-group .mat-tab-body-content {
+  padding: 16px 16px 64px 16px;
+}
+
+// tooltip
+.mat-tooltip {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+/* adjustments for @swimlane/ngx-charts */
+.chart-legend .legend-labels {
+  overflow-x: auto !important;
+}

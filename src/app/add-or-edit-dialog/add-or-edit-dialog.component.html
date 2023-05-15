@@ -1,0 +1,121 @@
+<h1 mat-dialog-title>{{ isNew ? "新增" : "編輯" }}紀錄</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="fg" class="form-box grid-cols-2">
+    <!-- 日期 -->
+    <mat-form-field
+      (click)="datepicker.open()"
+      class="col-span-2 cursor-pointer sm:col-span-1"
+    >
+      <mat-label>日期</mat-label>
+      <input
+        matInput
+        [matDatepicker]="datepicker"
+        [formControl]="fcs['date']"
+        readonly
+        required
+        tabindex="-1"
+        class="cursor-pointer"
+      />
+
+      <mat-icon matSuffix color="primary" matTooltip="選擇日期">
+        today
+      </mat-icon>
+
+      <mat-error *ngIf="fcs['date'].hasError('required')"
+        >請選擇&nbsp;<strong>日期</strong></mat-error
+      >
+
+      <mat-datepicker #datepicker [touchUi]="!SMQuery.matches"></mat-datepicker>
+    </mat-form-field>
+
+    <div class="flex col-span-2 sm:col-span-1">
+      <!-- 時 -->
+      <mat-form-field class="w-1/2">
+        <mat-label>時</mat-label>
+        <mat-select
+          [formControl]="fcs['hours']"
+          [errorStateMatcher]="datetimeErrorStateMatcher"
+        >
+          <mat-option *ngFor="let n of hoursList" [value]="n">
+            {{ n }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="fcs['hours'].hasError('required')"
+          >請選擇&nbsp;<strong>時</strong></mat-error
+        >
+      </mat-form-field>
+
+      <!-- 分 -->
+      <mat-form-field class="w-1/2">
+        <mat-label>分</mat-label>
+        <mat-select
+          [formControl]="fcs['minutes']"
+          [errorStateMatcher]="datetimeErrorStateMatcher"
+        >
+          <mat-option *ngFor="let n of minutesList" [value]="n">
+            {{ n }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="fcs['minutes'].hasError('required')"
+          >請選擇&nbsp;<strong>分</strong></mat-error
+        >
+        <mat-error *ngIf="fcs['minutes'].hasError('pattern')"
+          ><strong>分</strong>&nbsp;格式有誤</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="col-span-2">
+      <mat-label>名單</mat-label>
+      <mat-chip-list
+        #chipList
+        [selectable]="false"
+        [formControl]="fcs['nameSet']"
+        [errorStateMatcher]="minSizeErrorStateMatcher"
+        required
+      >
+        <mat-chip
+          *ngFor="let name of fcs['nameSet'].value"
+          (removed)="removeName(name)"
+        >
+          {{ name }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          #nameInput
+          [hidden]="fcs['nameSet'].value.size === 10"
+          [formControl]="nameCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="addName($event)"
+        />
+      </mat-chip-list>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="selected($event)"
+      >
+        <mat-option *ngFor="let name of filteredNames | async" [value]="name">
+          {{ name }}
+        </mat-option>
+      </mat-autocomplete>
+
+      <mat-error *ngIf="fcs['nameSet'].hasError('minSize')"
+        >請輸入&nbsp;<strong>名字</strong></mat-error
+      >
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button type="button" mat-button [mat-dialog-close]="undefined">取消</button>
+
+  <button type="button" mat-flat-button color="primary" (click)="onSubmit()">
+    {{ isNew ? "新增" : "編輯" }}
+  </button>
+</div>
