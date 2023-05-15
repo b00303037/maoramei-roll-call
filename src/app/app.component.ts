@@ -152,7 +152,7 @@ export class AppComponent implements OnDestroy {
         .lastIndexOf(true);
     }
 
-    this.results = allResults.slice(0, end);
+    this.results = allResults.slice(0, end + 1);
   }
 
   ngOnDestroy(): void {
