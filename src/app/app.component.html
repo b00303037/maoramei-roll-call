@@ -8,14 +8,15 @@
     </div>
   </div>
 
-  <div class="flex justify-around items-center">
+  <div class="flex justify-between items-center">
     <button
-      mat-icon-button
+      mat-button
       [disabled]="selectedIndex === 0"
-      matTooltip="點名紀錄"
       (click)="selectedIndex = 0"
+      class="flex items-center"
     >
       <mat-icon>chevron_left</mat-icon>
+      <span>點名紀錄</span>
     </button>
 
     <div [ngSwitch]="selectedIndex" class="text-3xl">
@@ -24,11 +25,12 @@
     </div>
 
     <button
-      mat-icon-button
+      mat-button
       [disabled]="selectedIndex === 1"
-      matTooltip="統計圖表"
       (click)="selectedIndex = 1"
+      class="flex items-center"
     >
+      <span>統計圖表</span>
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
@@ -112,12 +114,14 @@
           </table>
         </div>
 
-        <div
-          class="w-full h-12 flex justify-center items-center rounded-full bg-accent text-white cursor-pointer"
-          matTooltip="新增紀錄"
-          (click)="onAddOrEdit()"
-        >
-          <mat-icon>add</mat-icon>
+        <div class="px-4">
+          <div
+            class="w-full h-12 flex justify-center items-center rounded-full bg-accent text-white cursor-pointer"
+            matTooltip="新增紀錄"
+            (click)="onAddOrEdit()"
+          >
+            <mat-icon>add</mat-icon>
+          </div>
         </div>
       </div>
     </mat-tab>
